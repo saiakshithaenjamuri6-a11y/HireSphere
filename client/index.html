@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HireSphere - Job & Application Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Chart.js local bundle for offline reliability -->
+  <script src="js/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="brand" data-nav="dashboard">
+          <div class="brand-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <span class="brand-title">HireSphere</span>
+          <span class="brand-badge">SaaS</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Overview</div>
+        <a class="nav-item active" data-nav="dashboard" id="nav-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <div class="nav-section-title">Recruitment</div>
+        <a class="nav-item" data-nav="jobs" id="nav-jobs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <span>Job Openings</span>
+          <span class="badge" id="sidebar-jobs-count">0</span>
+        </a>
+
+        <a class="nav-item" data-nav="applications" id="nav-applications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Applications</span>
+          <span class="badge" id="sidebar-apps-count">0</span>
+        </a>
+
+        <div class="nav-section-title">System</div>
+        <a class="nav-item" data-nav="settings" id="nav-settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>System & DB</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="db-status-pill" id="sidebar-db-status">
+          <span class="status-dot online" id="sidebar-db-dot"></span>
+          <div class="db-status-text">
+            <span class="db-status-title" id="sidebar-db-title">MySQL 8.4</span>
+            <span class="db-status-sub" id="sidebar-db-sub">Database: jobs</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Application Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="page-title-group">
+            <h1 id="page-title">Dashboard Overview</h1>
+            <p id="page-subtitle">Real-time recruitment metrics and hiring pipeline</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="btn btn-secondary btn-sm" id="header-btn-job">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Post New Job</span>
+          </button>
+          <button class="btn btn-primary btn-sm" id="header-btn-app">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+            <span>Add Application</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Body Container -->
+      <main class="content-body">
+        
+        <!-- =================================================================
+             MODULE 1: DASHBOARD
+             ================================================================= -->
+        <section class="view-section active" id="view-dashboard">
+          <!-- 4 KPI Summary Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">Active Job Openings</span>
+                <span class="stat-value" id="stat-total-jobs">-</span>
+                <span class="stat-meta">Published roles</span>
+              </div>
+              <div class="stat-icon blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">Total Candidate Applications</span>
+                <span class="stat-value" id="stat-total-apps">-</span>
+                <span class="stat-meta">All-time submissions</span>
+              </div>
+              <div class="stat-icon indigo">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">Pending Review</span>
+                <span class="stat-value" id="stat-pending-apps">-</span>
+                <span class="stat-meta">Awaiting review</span>
+              </div>
+              <div class="stat-icon amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">Shortlisted Candidates</span>
+                <span class="stat-value" id="stat-shortlisted-apps">-</span>
+                <span class="stat-meta">Advanced to interview</span>
+              </div>
+              <div class="stat-icon purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary Charts Row -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h3 class="chart-title">Application Status Breakdown</h3>
+                  <p class="chart-subtitle">Distribution of candidates across pipeline stages</p>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="chart-status-breakdown"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h3 class="chart-title">Applications by Job Posting</h3>
+                  <p class="chart-subtitle">Candidate interest across top open roles</p>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="chart-jobs-distribution"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Column Recent Activity Tables -->
+          <div class="dashboard-columns">
+            <!-- Recent Jobs -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Job Openings</h3>
+                <button class="btn btn-subtle btn-sm" data-nav="jobs">View All Jobs &rarr;</button>
+              </div>
+              <div class="card-body card-body-flush">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Job Title & Company</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Applicants</th>
+                        <th style="text-align: right;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-recent-jobs-tbody">
+                      <tr>
+                        <td colspan="5" style="text-align:center; padding: 24px; color: var(--slate-400);">Loading recent jobs...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Applications -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Candidate Applications</h3>
+                <button class="btn btn-subtle btn-sm" data-nav="applications">View All Applications &rarr;</button>
+              </div>
+              <div class="card-body card-body-flush">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Candidate</th>
+                        <th>Applied Role</th>
+                        <th>Status</th>
+                        <th style="text-align: right;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-recent-apps-tbody">
+                      <tr>
+                        <td colspan="4" style="text-align:center; padding: 24px; color: var(--slate-400);">Loading recent applications...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             MODULE 2: JOB MANAGEMENT
+             ================================================================= -->
+        <section class="view-section" id="view-jobs">
+          <!-- Search & Filter Toolbar -->
+          <div class="toolbar-card">
+            <div class="toolbar-grid">
+              <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="jobs-search-input" class="search-input" placeholder="Search by job title, company, skills...">
+              </div>
+
+              <select id="jobs-location-filter" class="filter-select">
+                <option value="all">All Locations</option>
+              </select>
+
+              <select id="jobs-type-filter" class="filter-select">
+                <option value="all">All Employment Types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Remote">Remote</option>
+              </select>
+
+              <div class="toolbar-actions">
+                <button class="btn btn-secondary btn-sm" id="jobs-reset-filters">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                  </svg>
+                  <span>Reset</span>
+                </button>
+                <button class="btn btn-primary btn-sm" id="jobs-btn-add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>Add New Job</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Jobs Table Card -->
+          <div class="card">
+            <div class="card-header">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <h3 class="card-title">Job Postings</h3>
+                <span class="badge" id="jobs-table-count" style="font-size:12px; font-weight:600; background:var(--blue-50); color:var(--blue-600); padding:2px 8px; border-radius:12px;">0 items</span>
+              </div>
+            </div>
+            <div class="card-body card-body-flush">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Job Title & Company</th>
+                      <th>Location</th>
+                      <th>Employment Type</th>
+                      <th>Salary Range</th>
+                      <th>Applicants</th>
+                      <th>Date Posted</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="jobs-table-tbody">
+                    <!-- Populated dynamically via jobs.js -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty state -->
+              <div class="empty-state" id="jobs-empty-state" style="display: none;">
+                <div class="empty-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <h4 class="empty-title">No job postings found</h4>
+                <p class="empty-subtitle">Try adjusting your search criteria or create a new job posting.</p>
+                <button class="btn btn-primary btn-sm" id="jobs-empty-btn-add">+ Create First Job</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             MODULE 3: APPLICATION MANAGEMENT
+             ================================================================= -->
+        <section class="view-section" id="view-applications">
+          <!-- Search & Filter Toolbar -->
+          <div class="toolbar-card">
+            <div class="toolbar-grid">
+              <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="apps-search-input" class="search-input" placeholder="Search applicant name, email, or role...">
+              </div>
+
+              <select id="apps-status-filter" class="filter-select">
+                <option value="all">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Reviewed">Reviewed</option>
+                <option value="Shortlisted">Shortlisted</option>
+                <option value="Hired">Hired</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+
+              <select id="apps-job-filter" class="filter-select">
+                <option value="all">All Jobs</option>
+              </select>
+
+              <div class="toolbar-actions">
+                <button class="btn btn-secondary btn-sm" id="apps-reset-filters">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                  </svg>
+                  <span>Reset</span>
+                </button>
+                <button class="btn btn-primary btn-sm" id="apps-btn-add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>Add Application</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Applications Table Card -->
+          <div class="card">
+            <div class="card-header">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <h3 class="card-title">Candidate Applications</h3>
+                <span class="badge" id="apps-table-count" style="font-size:12px; font-weight:600; background:var(--blue-50); color:var(--blue-600); padding:2px 8px; border-radius:12px;">0 items</span>
+              </div>
+            </div>
+            <div class="card-body card-body-flush">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Applicant Name & Email</th>
+                      <th>Applied Role & Company</th>
+                      <th>Resume</th>
+                      <th>Application Status</th>
+                      <th>Applied Date</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="apps-table-tbody">
+                    <!-- Populated dynamically via applications.js -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty state -->
+              <div class="empty-state" id="apps-empty-state" style="display: none;">
+                <div class="empty-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                </div>
+                <h4 class="empty-title">No applications found</h4>
+                <p class="empty-subtitle">No candidate applications match your current filters.</p>
+                <button class="btn btn-primary btn-sm" id="apps-empty-btn-add">+ Submit Application</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             MODULE 4: SETTINGS & SYSTEM STATUS
+             ================================================================= -->
+        <section class="view-section" id="view-settings">
+          <div class="settings-grid">
+            <!-- Database Connection Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Database Connection Status</h3>
+                <button class="btn btn-secondary btn-sm" id="btn-refresh-db-status">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                  </svg>
+                  <span>Ping Server</span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="status-indicator-box">
+                  <span class="status-dot online" id="settings-db-status-dot" style="width:12px; height:12px;"></span>
+                  <div>
+                    <h4 style="font-size:14px; font-weight:600; color:var(--navy-900);" id="settings-db-status-title">Connected to MySQL Server</h4>
+                    <p style="font-size:12px; color:var(--slate-500);" id="settings-db-status-desc">Active connection established via connection pool</p>
+                  </div>
+                  <span class="status-badge-live connected" id="settings-db-badge" style="margin-left:auto;">Online</span>
+                </div>
+
+                <div class="key-value-list">
+                  <div class="key-value-item">
+                    <span class="key-value-key">Database Engine</span>
+                    <span class="key-value-val" id="settings-db-version">MySQL 8.4</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Database Name</span>
+                    <span class="key-value-val" id="settings-db-name">jobs</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Host & Port</span>
+                    <span class="key-value-val" id="settings-db-host">localhost:3306</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Database User</span>
+                    <span class="key-value-val" id="settings-db-user">root</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Storage Engine</span>
+                    <span class="key-value-val">InnoDB (ACID Compliant)</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Foreign Key Constraints</span>
+                    <span class="key-value-val">ON DELETE CASCADE, ON UPDATE CASCADE</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Total Job Records</span>
+                    <span class="key-value-val" id="settings-db-total-jobs">-</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Total Application Records</span>
+                    <span class="key-value-val" id="settings-db-total-apps">-</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Application & Runtime Info Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Application Runtime & Environment</h3>
+              </div>
+              <div class="card-body">
+                <div class="key-value-list">
+                  <div class="key-value-item">
+                    <span class="key-value-key">Application Name</span>
+                    <span class="key-value-val">HireSphere</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Application Version</span>
+                    <span class="key-value-val">v1.0.0</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Environment</span>
+                    <span class="key-value-val" id="settings-app-env">development</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Node.js Version</span>
+                    <span class="key-value-val" id="settings-app-node">v24.19.0</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Server Platform</span>
+                    <span class="key-value-val" id="settings-app-platform">win32</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Process Uptime</span>
+                    <span class="key-value-val" id="settings-app-uptime">-</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Memory Heap Used</span>
+                    <span class="key-value-val" id="settings-app-memory">-</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">API Architecture</span>
+                    <span class="key-value-val">RESTful JSON APIs</span>
+                  </div>
+                  <div class="key-value-item">
+                    <span class="key-value-key">Database Driver</span>
+                    <span class="key-value-val">mysql2 / Promise Pool</span>
+                  </div>
+                </div>
+
+                <div style="margin-top:20px; padding:14px; background:var(--blue-50); border:1px solid var(--blue-100); border-radius:var(--border-radius); font-size:12px; color:var(--blue-700);">
+                  <strong>Security Note:</strong> All database credentials are dynamically ingested from system environment variables. Parameterized queries prevent SQL injection across all endpoints.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =================================================================
+       MODALS
+       ================================================================= -->
+
+  <!-- Modal 1: Job Add / Edit -->
+  <div class="modal-backdrop" id="modal-job-form">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-job-title">Post New Job</h3>
+        <button class="modal-close" data-close-modal="modal-job-form">&times;</button>
+      </div>
+      <form id="form-job">
+        <input type="hidden" id="job-form-id" value="">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="job-input-title">Job Title <span class="required">*</span></label>
+              <input type="text" id="job-input-title" class="form-control" placeholder="e.g. Senior Frontend Engineer" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="job-input-company">Company Name <span class="required">*</span></label>
+              <input type="text" id="job-input-company" class="form-control" placeholder="e.g. Nexus Cloud Labs" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="job-input-location">Location</label>
+              <input type="text" id="job-input-location" class="form-control" placeholder="e.g. San Francisco, CA (Remote)">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="job-input-type">Employment Type</label>
+              <select id="job-input-type" class="form-control">
+                <option value="Full-time">Full-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Remote">Remote</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="job-input-salary">Salary Range</label>
+            <input type="text" id="job-input-salary" class="form-control" placeholder="e.g. $130,000 - $160,000">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="job-input-skills">Required Skills</label>
+            <input type="text" id="job-input-skills" class="form-control" placeholder="e.g. Node.js, React, MySQL, TypeScript, Docker">
+            <p class="form-hint">Separate skills with commas</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="job-input-desc">Job Description</label>
+            <textarea id="job-input-desc" class="form-control" rows="4" placeholder="Detailed role responsibilities and qualifications..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-job-form">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-job-submit">Save Job Posting</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Job View Details -->
+  <div class="modal-backdrop" id="modal-job-view">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="view-job-title">Job Details</h3>
+          <p class="table-secondary-text" id="view-job-company">Company</p>
+        </div>
+        <button class="modal-close" data-close-modal="modal-job-view">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="detail-label">Location</div>
+            <div class="detail-value" id="view-job-location">-</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Employment Type</div>
+            <div class="detail-value" id="view-job-type">-</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Salary Range</div>
+            <div class="detail-value" id="view-job-salary">-</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Posted Date</div>
+            <div class="detail-value" id="view-job-date">-</div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-label">Required Skills</div>
+          <div class="skills-tags" id="view-job-skills">
+            <!-- tags dynamically rendered -->
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-label">Role Description</div>
+          <div style="font-size:13px; line-height:1.6; color:var(--navy-800); white-space: pre-line;" id="view-job-desc">
+            <!-- description -->
+          </div>
+        </div>
+
+        <div class="detail-section" style="margin-top:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div class="detail-label" style="margin-bottom:0;">Applicants for this Position (<span id="view-job-app-count">0</span>)</div>
+            <button class="btn btn-secondary btn-sm" id="view-job-btn-add-app">+ Add Candidate</button>
+          </div>
+          <div class="table-responsive" style="max-height:200px; overflow-y:auto; border:1px solid var(--slate-200); border-radius:var(--border-radius);">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Status</th>
+                  <th>Applied Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="view-job-apps-tbody">
+                <!-- Linked candidates -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-job-view">Close</button>
+        <button type="button" class="btn btn-primary" id="view-job-btn-edit">Edit Job</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Application Add / Edit -->
+  <div class="modal-backdrop" id="modal-app-form">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-app-title">New Candidate Application</h3>
+        <button class="modal-close" data-close-modal="modal-app-form">&times;</button>
+      </div>
+      <form id="form-application">
+        <input type="hidden" id="app-form-id" value="">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="app-input-job">Target Job Posting <span class="required">*</span></label>
+            <select id="app-input-job" class="form-control" required>
+              <option value="">Select a job posting...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="app-input-name">Candidate Full Name <span class="required">*</span></label>
+            <input type="text" id="app-input-name" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="app-input-email">Candidate Email Address <span class="required">*</span></label>
+            <input type="email" id="app-input-email" class="form-control" placeholder="e.g. sarah.jenkins@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="app-input-resume">Resume URL / Portfolio</label>
+            <input type="url" id="app-input-resume" class="form-control" placeholder="https://linkedin.com/in/... or portfolio URL">
+            <p class="form-hint">Direct link to applicant CV, GitHub, or portfolio</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="app-input-status">Application Status</label>
+            <select id="app-input-status" class="form-control">
+              <option value="Pending">Pending</option>
+              <option value="Reviewed">Reviewed</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="Hired">Hired</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-app-form">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-app-submit">Save Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Application View Details -->
+  <div class="modal-backdrop" id="modal-app-view">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="view-app-name">Candidate Details</h3>
+          <p class="table-secondary-text" id="view-app-email">email</p>
+        </div>
+        <button class="modal-close" data-close-modal="modal-app-view">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="detail-label">Current Pipeline Status</div>
+            <div style="margin-top:4px;" id="view-app-status-badge">-</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Application Date</div>
+            <div class="detail-value" id="view-app-date">-</div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-label">Applied Role & Company</div>
+          <div class="detail-box" style="margin-top:4px;">
+            <div style="font-weight:600; color:var(--navy-900);" id="view-app-job-title">-</div>
+            <div style="font-size:12px; color:var(--slate-500);" id="view-app-company">-</div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-label">Resume / Portfolio Link</div>
+          <div style="margin-top:6px;" id="view-app-resume-container">
+            <!-- link -->
+          </div>
+        </div>
+
+        <div class="detail-section" style="border-top:1px solid var(--slate-200); padding-top:16px;">
+          <div class="detail-label">Quick Update Status</div>
+          <div style="display:flex; gap:10px; margin-top:8px;">
+            <select id="view-app-status-select" class="form-control" style="flex:1;">
+              <option value="Pending">Pending</option>
+              <option value="Reviewed">Reviewed</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="Hired">Hired</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+            <button class="btn btn-primary btn-sm" id="view-app-btn-update-status">Update Status</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-app-view">Close</button>
+        <button type="button" class="btn btn-primary" id="view-app-btn-edit">Edit Application</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Delete Confirmation -->
+  <div class="modal-backdrop" id="modal-confirm-delete">
+    <div class="modal-dialog" style="max-width:440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="delete-modal-title">Confirm Deletion</h3>
+        <button class="modal-close" data-close-modal="modal-confirm-delete">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:14px; color:var(--navy-800); margin-bottom:12px;" id="delete-modal-message">
+          Are you sure you want to delete this record? This action cannot be undone.
+        </p>
+        <div id="delete-modal-warning" style="display:none; padding:10px 12px; background:var(--rose-50); border:1px solid var(--rose-100); border-radius:var(--border-radius); font-size:12px; color:var(--rose-700);">
+          <strong>Cascading Delete:</strong> Deleting this job will automatically remove all candidate applications submitted for it.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-confirm-delete">Cancel</button>
+        <button type="button" class="btn btn-danger" id="delete-modal-confirm-btn">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application JavaScript Modules -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/jobs.js"></script>
+  <script src="js/applications.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

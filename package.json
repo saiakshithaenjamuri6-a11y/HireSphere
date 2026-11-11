@@ -1,0 +1,31 @@
+{
+  "name": "hiresphere",
+  "version": "1.0.0",
+  "description": "Professional Job and Application Management System",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "db:init": "node database/init.js",
+    "test:api": "node server/tests/api.test.js",
+    "screenshots": "node capture_screenshots.js"
+  },
+  "keywords": [
+    "recruitment",
+    "job-board",
+    "applicant-tracking-system",
+    "ats",
+    "management-system"
+  ],
+  "author": "HireSphere Engineering",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.17.0"
+  }
+}
